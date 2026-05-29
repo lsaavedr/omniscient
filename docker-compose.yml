@@ -1,0 +1,46 @@
+services:
+  directus:
+    image: directus/directus:11.17.4
+    ports:
+      - "8055:8055"
+    volumes:
+      - ./directus_database:/directus/data
+      - ./directus_uploads:/directus/uploads
+      - ./directus_extensions:/directus/extensions
+    environment:
+      - SECRET=${DIRECTUS_SECRET:-supersecretkey123supersecretkey123}
+      - ADMIN_EMAIL=admin@gmail.com
+      - ADMIN_PASSWORD=admin123
+      - DB_CLIENT=sqlite3
+      - DB_FILENAME=/directus/data/database.db
+      - PUBLIC_URL=http://localhost:8055
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - DIRECTUS_URL=http://directus:8055
+      - PORT=3001
+    depends_on:
+      - directus
+    restart: on-failure
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - backend
+    restart: on-failure
+
+networks:
+  default:
+    name: app-network
+

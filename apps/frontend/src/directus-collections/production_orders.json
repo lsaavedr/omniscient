@@ -1,0 +1,116 @@
+[
+  {
+    "collection": "production_orders",
+    "meta": {
+      "collection": "production_orders",
+      "note": "Production orders for scheduling",
+      "display_template": "{{reference}} - {{product}}",
+      "hidden": false,
+      "singleton": false
+    },
+    "schema": {
+      "name": "production_orders"
+    },
+    "fields": [
+      {
+        "collection": "production_orders",
+        "field": "reference",
+        "type": "string",
+        "meta": {
+          "field": "reference",
+          "interface": "input",
+          "options": {"placeholder": "e.g., ORD-001"},
+          "display": "raw",
+          "hidden": false
+        },
+        "schema": {"name": "reference", "type": "string", "maxLength": 255, "not_null": true}
+      },
+      {
+        "collection": "production_orders",
+        "field": "product",
+        "type": "string",
+        "meta": {
+          "field": "product",
+          "interface": "input",
+          "options": {"placeholder": "e.g., Widget A"},
+          "display": "raw",
+          "hidden": false
+        },
+        "schema": {"name": "product", "type": "string", "maxLength": 255, "not_null": true}
+      },
+      {
+        "collection": "production_orders",
+        "field": "quantity",
+        "type": "integer",
+        "meta": {
+          "field": "quantity",
+          "interface": "input",
+          "options": {"min": 1},
+          "display": "raw",
+          "hidden": false
+        },
+        "schema": {"name": "quantity", "type": "integer", "not_null": true, "default": 1}
+      },
+      {
+        "collection": "production_orders",
+        "field": "startDate",
+        "type": "date",
+        "meta": {
+          "field": "startDate",
+          "interface": "datetime",
+          "options": {"dateFormat": "YYYY-MM-DD"},
+          "display": "datetime",
+          "hidden": false
+        },
+        "schema": {"name": "startDate", "type": "date", "not_null": false}
+      },
+      {
+        "collection": "production_orders",
+        "field": "endDate",
+        "type": "date",
+        "meta": {
+          "field": "endDate",
+          "interface": "datetime",
+          "options": {"dateFormat": "YYYY-MM-DD"},
+          "display": "datetime",
+          "hidden": false
+        },
+        "schema": {"name": "endDate", "type": "date", "not_null": false}
+      },
+      {
+        "collection": "production_orders",
+        "field": "status",
+        "type": "string",
+        "meta": {
+          "field": "status",
+          "interface": "select-dropdown",
+          "options": {
+            "choices": [
+              {"text": "Planned", "value": "planned"},
+              {"text": "Scheduled", "value": "scheduled"},
+              {"text": "In Progress", "value": "in_progress"},
+              {"text": "Completed", "value": "completed"}
+            ]
+          },
+          "display": "raw",
+          "hidden": false
+        },
+        "schema": {"name": "status", "type": "string", "maxLength": 20, "not_null": true, "default": "planned"}
+      },
+      {
+        "collection": "production_orders",
+        "field": "createdAt",
+        "type": "timestamp",
+        "meta": {
+          "field": "createdAt",
+          "special": ["date-created"],
+          "interface": "datetime",
+          "display": "datetime",
+          "hidden": false,
+          "readonly": true
+        },
+        "schema": {"name": "createdAt", "type": "timestamp", "not_null": true, "default": "CURRENT_TIMESTAMP"}
+      }
+    ]
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "name": "production-orders-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspaces foreach -v -p run dev",
+    "build": "yarn workspaces foreach run build",
+    "test": "cd apps/backend && yarn test",
+    "lint": "yarn workspaces foreach run lint",
+    "typecheck": "yarn workspaces foreach run typecheck"
+  }
+}
