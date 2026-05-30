@@ -6,7 +6,8 @@ COPY package.json yarn.lock tsconfig.base.json .yarnrc.yml ./
 COPY packages ./packages
 COPY apps/backend ./apps/backend
 
-RUN corepack enable && corepack prepare yarn@stable --activate && npm install -g typescript@5.3 && yarn install && yarn workspace @production-orders/types build && yarn workspace @production-orders/backend build
+RUN npm install -g typescript@5.3
+RUN corepack enable && corepack prepare yarn@stable --activate && yarn install && yarn workspace @production-orders/types build && yarn workspace @production-orders/backend build
 
 EXPOSE 3001
 

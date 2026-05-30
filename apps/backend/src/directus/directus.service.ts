@@ -51,10 +51,20 @@ export class DirectusService implements OnModuleInit {
       ...((options.headers as Record<string, string>) || {}),
     };
 
-    const response = await fetch(url, {
+    let response = await fetch(url, {
       ...options,
       headers,
     });
+
+    if (response.status === 401 || response.status === 403) {
+      this.logger.log('Token expired, re-authenticating...');
+      await this.login();
+      headers.Authorization = `Bearer ${this.token}`;
+      response = await fetch(url, {
+        ...options,
+        headers,
+      });
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
